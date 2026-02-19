@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>One Final Riddle ✿</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#ffe0ef;
+      --bg2:#ffd0e6;
+      --bg3:#fff2f8;
+      --ink:#3a1f2b;
+      --card:#ffffffcc;
+      --stroke:#2f1a22;
+      --shadow: 0 24px 70px rgba(0,0,0,.18);
+      --hot:#ff4fa3;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family:"Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+
+      overflow-x:hidden;
+      overflow-y:auto;
+
+      padding:
+        calc(18px + env(safe-area-inset-top))
+        calc(18px + env(safe-area-inset-right))
+        calc(18px + env(safe-area-inset-bottom))
+        calc(18px + env(safe-area-inset-left));
+
+      background:
+        radial-gradient(1000px 700px at 25% 20%, #ffffff 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 35%, var(--bg1) 0%, transparent 55%),
+        linear-gradient(135deg, var(--bg2), var(--bg3));
+    }
+
+    .wallpaper{
+      position:fixed; inset:0; pointer-events:none; opacity:.30;
+      background-image:
+        radial-gradient(circle at 12px 12px, #ff9ad2 0 3px, transparent 3px),
+        radial-gradient(circle at 42px 30px, #ffc1e3 0 2px, transparent 2px),
+        radial-gradient(circle at 76px 60px, #ff7bbf 0 2.5px, transparent 2.5px),
+        radial-gradient(circle at 22px 72px, #ffd7ea 0 2px, transparent 2px);
+      background-size: 92px 92px;
+      filter: blur(.2px);
+    }
+
+    .wrap{
+      width:min(920px, 100%);
+      margin: 0 auto;
+      position:relative;
+      display:grid;
+      place-items:start center;
+      min-height: calc(100svh - 36px);
+    }
+
+    .card{
+      width:100%;
+      background:var(--card);
+      border:3px solid #fff;
+      outline:2px solid rgba(0,0,0,.12);
+      border-radius:28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: clamp(16px, 4vw, 26px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .corner{
+      position:absolute;
+      width:min(170px, 34vw);
+      aspect-ratio:1/1;
+      opacity:.97;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.18));
+      pointer-events:none;
+      z-index:0;
+    }
+    .corner.tl{ left:-14px; top:-14px; transform: rotate(-8deg); }
+    .corner.tr{ right:-14px; top:-14px; transform: rotate(10deg) scaleX(-1); }
+    .corner.bl{ left:-14px; bottom:-14px; transform: rotate(8deg) scaleY(-1); }
+    .corner.br{ right:-14px; bottom:-14px; transform: rotate(-10deg) scale(-1); }
+
+    h1{
+      font-family:"Cherry Bomb One", cursive;
+      font-size: clamp(30px, 7vw, 56px);
+      margin:0 0 10px 0;
+      text-shadow: 0 3px 0 #fff, 0 12px 30px rgba(0,0,0,.12);
+      position:relative;
+      z-index:1;
+      line-height:1.05;
+    }
+
+    .riddle{
+      background:#ffffffb8;
+      border:2px solid #fff;
+      outline:2px solid rgba(0,0,0,.10);
+      border-radius:22px;
+      padding: clamp(14px, 4vw, 18px);
+      line-height:1.55;
+      font-size: clamp(15px, 3.9vw, 17px);
+      box-shadow: 0 18px 45px rgba(0,0,0,.10);
+      white-space: pre-wrap;
+      position:relative;
+      z-index:1;
+    }
+
+    .prompt{
+      margin:16px 0 10px 0;
+      font-weight:900;
+      font-size: clamp(14px, 3.8vw, 16px);
+      position:relative;
+      z-index:1;
+    }
+
+    .buttons{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      margin-top: 6px;
+      position:relative;
+      z-index:1;
+    }
+    @media (max-width: 520px){
+      .buttons{ flex-direction:column; }
+    }
+
+    .btn{
+      --scale:1;
+      --lift:0px;
+
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      user-select:none;
+
+      font-family:"Nunito", sans-serif;
+      font-weight:900;
+      font-size: clamp(16px, 4.2vw, 18px);
+      letter-spacing:.2px;
+
+      padding: 14px 18px;
+      border-radius: 18px;
+      color: var(--ink);
+
+      border: 2px solid #fff;
+      outline: 2px solid rgba(0,0,0,.12);
+      box-shadow: 0 18px 45px rgba(0,0,0,.18);
+
+      transform: translateY(var(--lift)) scale(var(--scale));
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      min-width: min(260px, 90%);
+      max-width: 100%;
+    }
+    .btn:hover{ --lift:-2px; box-shadow: 0 22px 55px rgba(0,0,0,.20); }
+    .btn:active{ --lift:1px; }
+
+    .yes{
+      background: linear-gradient(180deg, #fff 0%, #fff3fa 45%, #ffe6f2 100%);
+    }
+    .no{
+      background: linear-gradient(180deg, #fff 0%, #fff7fb 45%, #ffeef7 100%);
+      opacity:.98;
+    }
+
+    @keyframes wiggle {
+      0%,100%{ transform: translateY(var(--lift)) scale(var(--scale)) rotate(0); }
+      25%{ transform: translateY(calc(var(--lift) - 2px)) scale(var(--scale)) rotate(-1deg); }
+      75%{ transform: translateY(calc(var(--lift) - 2px)) scale(var(--scale)) rotate(1deg); }
+    }
+    .wiggle { animation: wiggle .35s ease-in-out 1; }
+
+    /* modal */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.40);
+      display:none;
+      place-items:center;
+      padding:24px;
+      z-index:50;
+      backdrop-filter: blur(6px);
+    }
+    .overlay.show{ display:grid; }
+    .modal{
+      width:min(520px, 94vw);
+      background:#ffffffee;
+      border:3px solid #fff;
+      outline:2px solid rgba(0,0,0,.12);
+      border-radius:26px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .modal h2{
+      font-family:"Cherry Bomb One", cursive;
+      margin:0 0 6px 0;
+      font-size: clamp(28px, 6vw, 46px);
+    }
+    .modal p{ margin:0; font-weight:900; opacity:.9; }
+    .close{
+      margin-top:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px 14px;
+      border-radius:16px;
+      font-weight:900;
+      cursor:pointer;
+      border:2px solid #fff;
+      outline:2px solid rgba(0,0,0,.12);
+      background: linear-gradient(180deg, #fff 0%, #fff3fa 60%, #ffe6f2 100%);
+      box-shadow: 0 16px 35px rgba(0,0,0,.16);
+    }
+    .heart{
+      position:absolute;
+      font-size:22px;
+      opacity:.9;
+      animation: float 2.2s ease-in forwards;
+      user-select:none;
+    }
+    @keyframes float{
+      from{ transform: translateY(30px) scale(0.9); opacity:0; }
+      20%{ opacity:1; }
+      to{ transform: translateY(-240px) scale(1.2); opacity:0; }
+    }
+
+    .tiny{
+      margin-top:14px;
+      text-align:center;
+      font-weight:900;
+      opacity:.85;
+      position:relative;
+      z-index:1;
+    }
+    .tiny a{ color:inherit; text-decoration:none; }
+
+    @media (prefers-reduced-motion: reduce){
+      .wiggle{ animation:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wallpaper" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <main class="card">
+      <!-- corner flower -->
+      <svg class="corner tl" viewBox="0 0 200 200" aria-hidden="true">
+        <g>
+          <g transform="translate(55 55)">
+            <g fill="#fff" stroke="#2f1a22" stroke-width="3">
+              <ellipse rx="12" ry="26" transform="rotate(0) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(60) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(120) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(180) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(240) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(300) translate(0 -26)"/>
+            </g>
+            <circle r="12" fill="#ffeaa6" stroke="#2f1a22" stroke-width="3"/>
+          </g>
+          <g transform="translate(120 65) scale(0.9)">
+            <g fill="#fff" stroke="#2f1a22" stroke-width="3">
+              <ellipse rx="10" ry="22" transform="rotate(0) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(72) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(144) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(216) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(288) translate(0 -22)"/>
+            </g>
+            <circle r="10" fill="#ffd7ea" stroke="#2f1a22" stroke-width="3"/>
+          </g>
+          <path d="M35 130 C55 110, 70 105, 95 98" fill="none" stroke="#2f1a22" stroke-width="4" stroke-linecap="round"/>
+          <path d="M70 112 C58 108, 52 118, 62 128 C72 140, 92 126, 70 112Z"
+                fill="#c8f7e8" stroke="#2f1a22" stroke-width="3"/>
+          <circle cx="55" cy="55" r="14" fill="#ffd1e6"/>
+        </g>
+      </svg>
+      <svg class="corner tr" viewBox="0 0 200 200" aria-hidden="true"></svg>
+      <svg class="corner bl" viewBox="0 0 200 200" aria-hidden="true"></svg>
+      <svg class="corner br" viewBox="0 0 200 200" aria-hidden="true"></svg>
+
+      <h1>One Final Riddle ✿</h1>
+
+      <div class="riddle">Today I’m not trying to be perfect, Because loving you has taught me that real is better than perfect.
+When I picture the rest of my life, All I see is you beside me—laughing at the same stupid jokes and holding my hand when things get hard.
+I choose you in the small moments, 1 ordinary morning at a time.
+I choose you when we’re celebrating, 5 happy seconds turning into whole evenings I never want to end.
+I choose you when we’re tired, 9 gentle chances to try again instead of keeping score.
+And I choose you when the world feels heavy, 6 steady breaths where we find our way back to each other.
+So here are my promises, 2 hands that will always reach for yours.
+Here is my loyalty, 1 heart that will stay on your side.
+Here is my adventure, For every trip we take and every place we call home.
+Here is my effort, Even when it would be easier to shut down I will show up.
+Here is my future, Because I don’t want a “someday”—I want a date.
+If you’re willing, 2 lives becoming one team.
+If you’re ready, 0 doubts left in me.
+If you’ll let me, 2 words that change everything—marry me.
+And if you keep this card, 6 words I’m asking with my whole heart: Will you be mine forever?</div>
+
+      <div class="prompt" id="prompt">Choose carefully 😇💗</div>
+
+      <div class="buttons" id="buttons">
+        <button class="btn yes" id="yesBtn">Yes 💍</button>
+        <button class="btn no" id="noBtn">No 🙈</button>
+      </div>
+
+      <div class="tiny">
+        <a href="./index.html">← back</a> · <a href="./foreverrory.html">ring page 💗</a>
+      </div>
+    </main>
+  </div>
+
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" id="modal">
+      <h2 id="modalTitle">YAY!! 💗💍</h2>
+      <p>Best answer ever. Come here. 😭✨</p>
+      <div class="close" id="closeBtn">okay okay I’m coming 🥰</div>
+    </div>
+  </div>
+
+  <script>
+    // clone corner flowers safely (no gradients)
+    const tl = document.querySelector(".corner.tl");
+    ["tr","bl","br"].forEach(cls => {
+      const c = tl.cloneNode(true);
+      c.classList.remove("tl");
+      c.classList.add(cls);
+      tl.parentElement.appendChild(c);
+    });
+
+    const promptEl = document.getElementById("prompt");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    const overlay = document.getElementById("overlay");
+    const modal = document.getElementById("modal");
+    const closeBtn = document.getElementById("closeBtn");
+
+    let noClicks = 0;
+
+    const noSteps = [
+      { text: "Are you sure? 🥺🌸", scale: 1.12, prompt: "Wait… what??" },
+      { text: "Like… REALLY sure?? 😳💗", scale: 1.32, prompt: "Try again, pretty please?" },
+      { text: "Think you have a choice? 😼🎀", scale: 1.55, prompt: "Hehe. Not happening." },
+      { text: "Okay… last chance 😇💞", scale: 1.85, prompt: "Don’t be silly." },
+    ];
+
+    function wiggle(el){
+      el.classList.remove("wiggle");
+      void el.offsetWidth;
+      el.classList.add("wiggle");
+    }
+
+    function updateNoGlow(stepIdx){
+      const glow = Math.min(0.18 + stepIdx * 0.12, 0.6);
+      noBtn.style.boxShadow =
+        `0 18px 45px rgba(0,0,0,.18), 0 0 0 6px rgba(255,79,163,${glow})`;
+      noBtn.style.filter = `saturate(${1 + stepIdx * 0.15})`;
+    }
+
+    noBtn.addEventListener("click", () => {
+      noClicks++;
+      const step = noSteps[noClicks - 1];
+
+      if(step){
+        noBtn.textContent = step.text;                 // question on the button
+        noBtn.style.setProperty("--scale", step.scale); // grow
+        updateNoGlow(noClicks);
+        promptEl.textContent = step.prompt;
+        wiggle(noBtn);
+        return;
+      }
+
+      // final: remove NO, keep YES only
+      promptEl.textContent = "Hehe. Only ONE button now 😇💗";
+      noBtn.remove();
+
+      yesBtn.style.setProperty("--scale", 1.14);
+      yesBtn.textContent = "YES 💍💗";
+      wiggle(yesBtn);
+    });
+
+    yesBtn.addEventListener("click", () => {
+      overlay.classList.add("show");
+      const hearts = ["💗","💖","💞","💘","🌸","🎀"];
+      for(let i=0;i<18;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        h.style.left = (10 + Math.random()*80) + "%";
+        h.style.bottom = (-10 + Math.random()*20) + "px";
+        h.style.animationDelay = (Math.random()*0.5) + "s";
+        modal.appendChild(h);
+        setTimeout(()=>h.remove(), 2600);
+      }
+    });
+
+    closeBtn.addEventListener("click", () => overlay.classList.remove("show"));
+    overlay.addEventListener("click", (e) => { if(e.target === overlay) overlay.classList.remove("show"); });
+    window.addEventListener("keydown", (e) => { if(e.key === "Escape") overlay.classList.remove("show"); });
+  </script>
+</body>
+</html>

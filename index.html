@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Kawaii Corner ✨</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#ffe0ef;
+      --bg2:#ffd0e6;
+      --bg3:#fff2f8;
+      --ink:#3a2b3b;
+      --card:#ffffffcc;
+      --stroke:#2c1f2e;
+      --pink:#ff5aa9;
+      --pink2:#ff87c6;
+      --lav:#cdb7ff;
+      --mint:#a8f3d6;
+      --butter:#ffeaa6;
+      --shadow: 0 30px 80px rgba(0,0,0,.14);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family:"Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+
+      /* phone-friendly */
+      overflow-x:hidden;
+      overflow-y:auto;
+
+      padding:
+        calc(18px + env(safe-area-inset-top))
+        calc(18px + env(safe-area-inset-right))
+        calc(18px + env(safe-area-inset-bottom))
+        calc(18px + env(safe-area-inset-left));
+
+      background:
+        radial-gradient(1200px 700px at 20% 20%, #ffffff 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 30%, var(--bg1), transparent 55%),
+        linear-gradient(135deg, var(--bg2), var(--bg3));
+    }
+
+    .wallpaper{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.33;
+      background-image:
+        radial-gradient(circle at 12px 12px, #ff9ad2 0 3px, transparent 3px),
+        radial-gradient(circle at 42px 30px, #ffc1e3 0 2px, transparent 2px),
+        radial-gradient(circle at 76px 60px, #ff7bbf 0 2.5px, transparent 2.5px),
+        radial-gradient(circle at 22px 72px, #ffd7ea 0 2px, transparent 2px);
+      background-size: 92px 92px;
+      filter: blur(.2px);
+    }
+
+    .wrap{
+      min-height: calc(100svh - 36px);
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
+
+    /* floating sparkles */
+    .sparkle{
+      position:fixed;
+      width:10px; height:10px;
+      border-radius:4px;
+      background:#fff;
+      box-shadow: 0 0 0 2px #ffffff80, 0 10px 25px #00000010;
+      opacity:.85;
+      transform: rotate(45deg);
+      animation: floatUp linear infinite;
+      pointer-events:none;
+      z-index:1;
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(40px) rotate(45deg); opacity:0; }
+      10%{ opacity:.9; }
+      to{ transform: translateY(-120vh) rotate(45deg); opacity:0; }
+    }
+
+    .card{
+      width:min(880px, 100%);
+      background:var(--card);
+      border:3px solid #fff;
+      outline:2px solid #00000010;
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: clamp(16px, 4vw, 28px);
+      position:relative;
+      overflow:hidden;
+      z-index:2;
+    }
+
+    /* cute flower corners (no gradients => safe to clone / reuse) */
+    .corner{
+      position:absolute;
+      width:min(170px, 34vw);
+      aspect-ratio:1/1;
+      opacity:.97;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.18));
+      pointer-events:none;
+      z-index:0;
+    }
+    .corner.tl{ left:-14px; top:-14px; transform: rotate(-8deg); }
+    .corner.tr{ right:-14px; top:-14px; transform: rotate(10deg) scaleX(-1); }
+    .corner.bl{ left:-14px; bottom:-14px; transform: rotate(8deg) scaleY(-1); }
+    .corner.br{ right:-14px; bottom:-14px; transform: rotate(-10deg) scale(-1); }
+
+    h1{
+      font-family:"Cherry Bomb One", cursive;
+      font-size: clamp(34px, 7vw, 56px);
+      margin:0;
+      line-height:1.05;
+      text-shadow: 0 3px 0 #fff, 0 8px 24px rgba(0,0,0,.10);
+    }
+    .subtitle{
+      margin:10px 0 0 0;
+      font-size: clamp(14px, 3.8vw, 18px);
+      opacity:.9;
+      font-weight:800;
+    }
+
+    .pillRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .pill{
+      border:2px dashed #ffffff;
+      outline:2px solid #00000010;
+      border-radius:999px;
+      padding:8px 12px;
+      background:#ffffffb0;
+      font-weight:900;
+      font-size:13.5px;
+      box-shadow: 0 12px 25px rgba(0,0,0,.08);
+      user-select:none;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .dot{ width:10px; height:10px; border-radius:999px; box-shadow:0 0 0 2px #fff; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:16px;
+      margin-top:16px;
+      position:relative;
+      z-index:2;
+    }
+    @media (max-width: 780px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      border-radius:24px;
+      background:#ffffffb8;
+      outline:2px solid #00000010;
+      border:2px solid #fff;
+      padding: 16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.10);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cta{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      justify-content:center;
+      align-items:flex-start;
+      min-height: 220px;
+    }
+
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      font-family:"Nunito", sans-serif;
+      font-weight:900;
+      font-size: clamp(16px, 4.2vw, 18px);
+      letter-spacing:.2px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      color: var(--ink);
+      background: linear-gradient(180deg, #fff 0%, #fff4fa 40%, #ffe6f2 100%);
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+      outline: 2px solid rgba(0,0,0,.12);
+      border: 2px solid #fff;
+      transform: translateY(0);
+      transition: transform .12s ease, box-shadow .12s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+    }
+    .btn:hover{ transform: translateY(-2px); box-shadow: 0 22px 50px rgba(0,0,0,.22); }
+    .btn:active{ transform: translateY(1px); }
+    .btn svg{ width:22px; height:22px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.12)); }
+
+    /* Sticker stage: kawaii kitty + bunny (original vibe, not using external images) */
+    .stickers{
+      display:grid;
+      place-items:center;
+      min-height: 260px;
+    }
+    .stickerStage{
+      position:relative;
+      width: min(360px, 92%);
+      height: 260px;
+    }
+    .bubble{
+      position:absolute;
+      border-radius:999px;
+      background:#ffffffb8;
+      outline:2px solid #00000010;
+      border:2px solid #fff;
+      box-shadow: 0 18px 45px rgba(0,0,0,.10);
+      animation: bob 2.8s ease-in-out infinite;
+    }
+    @keyframes bob{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-10px); }
+    }
+
+    @keyframes wiggle{
+      0%,100%{ transform: rotate(-2deg) translateY(0); }
+      50%{ transform: rotate(3deg) translateY(-6px); }
+    }
+    @keyframes wiggle2{
+      0%,100%{ transform: rotate(2deg) translateY(0); }
+      50%{ transform: rotate(-3deg) translateY(-7px); }
+    }
+
+    .kitty{
+      position:absolute; left: 18px; top: 18px;
+      width: 160px; height: 160px;
+      animation: wiggle 4.5s ease-in-out infinite;
+      transform-origin: 60% 70%;
+    }
+    .kitty .face{
+      position:absolute; inset: 26px 20px 18px 20px;
+      background:#fff;
+      border:4px solid var(--stroke);
+      border-radius: 42px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.12);
+    }
+    .kitty .ear{
+      position:absolute; top: 10px;
+      width: 44px; height: 44px;
+      background:#fff;
+      border:4px solid var(--stroke);
+      border-bottom:0;
+      border-radius: 18px 18px 10px 10px;
+      transform: rotate(45deg);
+    }
+    .kitty .ear.left{ left: 28px; }
+    .kitty .ear.right{ right: 28px; transform: rotate(-45deg); }
+    .kitty .eyes{
+      position:absolute; left:0; right:0; top: 70px;
+      display:flex; justify-content:center; gap:40px;
+    }
+    .kitty .eye{ width:10px; height:14px; border-radius:999px; background:var(--stroke); }
+    .kitty .nose{
+      position:absolute; left:50%; top: 92px;
+      width:10px; height:8px; transform: translateX(-50%);
+      background:var(--butter);
+      border:3px solid var(--stroke);
+      border-radius:999px;
+    }
+    .kitty .whisker{
+      position:absolute; top: 98px; width:46px; height:4px;
+      background:var(--stroke); border-radius:999px; opacity:.75;
+    }
+    .kitty .whisker.l1{ left: 16px; transform: rotate(8deg); }
+    .kitty .whisker.l2{ left: 14px; top: 112px; transform: rotate(-6deg); }
+    .kitty .whisker.r1{ right: 16px; transform: rotate(-8deg); }
+    .kitty .whisker.r2{ right: 14px; top: 112px; transform: rotate(6deg); }
+    .kitty .bow{
+      position:absolute; right: 6px; top: 34px;
+      width:56px; height:42px; transform: rotate(8deg);
+    }
+    .kitty .bow:before,.kitty .bow:after{
+      content:""; position:absolute; width:26px; height:26px;
+      background: var(--pink);
+      border:4px solid var(--stroke);
+      border-radius:10px; top:8px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.12);
+    }
+    .kitty .bow:before{ left:0; transform: rotate(12deg); }
+    .kitty .bow:after{ right:0; transform: rotate(-12deg); }
+    .kitty .bow .knot{
+      position:absolute; left:50%; top: 15px;
+      transform: translateX(-50%);
+      width:14px; height:14px;
+      background: var(--butter);
+      border:4px solid var(--stroke);
+      border-radius:999px;
+    }
+
+    .bunny{
+      position:absolute; right: 12px; bottom: 10px;
+      width: 190px; height: 190px;
+      animation: wiggle2 5s ease-in-out infinite;
+      transform-origin: 45% 75%;
+    }
+    .bunny .hood{
+      position:absolute; inset: 18px 22px 22px 22px;
+      background: linear-gradient(180deg, #ffd7ea 0%, #ffeaf4 60%, #fff 100%);
+      border:4px solid var(--stroke);
+      border-radius:56px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.12);
+    }
+    .bunny .ear{
+      position:absolute; width:44px; height:90px;
+      background: linear-gradient(180deg, #ffd7ea 0%, #fff 70%);
+      border:4px solid var(--stroke);
+      border-radius:999px; top: -6px;
+    }
+    .bunny .ear.left{ left: 40px; transform: rotate(-12deg); }
+    .bunny .ear.right{ right: 40px; transform: rotate(12deg); }
+    .bunny .face{
+      position:absolute; left: 40px; right: 40px; top: 70px; bottom: 40px;
+      background:#fff;
+      border:4px solid var(--stroke);
+      border-radius:40px;
+    }
+    .bunny .eyes{
+      position:absolute; left:0; right:0; top: 98px;
+      display:flex; justify-content:center; gap:44px;
+    }
+    .bunny .eye{ width:10px; height:14px; border-radius:999px; background:var(--stroke); }
+    .bunny .blush{
+      position:absolute; width:18px; height:10px;
+      background:#ffb6d8; border-radius:999px; opacity:.9; top:110px;
+    }
+    .bunny .blush.left{ left: 50px; }
+    .bunny .blush.right{ right: 50px; }
+    .bunny .mouth{
+      position:absolute; left:50%; top: 122px;
+      width:20px; height:12px; transform: translateX(-50%);
+      border-bottom:4px solid var(--stroke);
+      border-radius: 0 0 999px 999px; opacity:.85;
+    }
+
+    /* reduce motion if user prefers */
+    @media (prefers-reduced-motion: reduce){
+      .sparkle,.bubble,.kitty,.bunny{ animation:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wallpaper" aria-hidden="true"></div>
+
+  <div class="wrap" id="wrap">
+    <main class="card">
+      <!-- corner flower (we clone + transform using CSS classes, not JS) -->
+      <svg class="corner tl" viewBox="0 0 200 200" aria-hidden="true">
+        <g>
+          <g transform="translate(55 55)">
+            <g fill="#fff" stroke="#2c1f2e" stroke-width="3">
+              <ellipse rx="12" ry="26" transform="rotate(0) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(60) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(120) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(180) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(240) translate(0 -26)"/>
+              <ellipse rx="12" ry="26" transform="rotate(300) translate(0 -26)"/>
+            </g>
+            <circle r="12" fill="#ffeaa6" stroke="#2c1f2e" stroke-width="3"/>
+          </g>
+          <g transform="translate(120 65) scale(0.9)">
+            <g fill="#fff" stroke="#2c1f2e" stroke-width="3">
+              <ellipse rx="10" ry="22" transform="rotate(0) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(72) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(144) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(216) translate(0 -22)"/>
+              <ellipse rx="10" ry="22" transform="rotate(288) translate(0 -22)"/>
+            </g>
+            <circle r="10" fill="#ffd7ea" stroke="#2c1f2e" stroke-width="3"/>
+          </g>
+          <path d="M35 130 C55 110, 70 105, 95 98" fill="none" stroke="#2c1f2e" stroke-width="4" stroke-linecap="round"/>
+          <path d="M70 112 C58 108, 52 118, 62 128 C72 140, 92 126, 70 112Z"
+                fill="#c8f7e8" stroke="#2c1f2e" stroke-width="3"/>
+          <circle cx="55" cy="55" r="14" fill="#ffd1e6"/>
+        </g>
+      </svg>
+      <svg class="corner tr" viewBox="0 0 200 200" aria-hidden="true"></svg>
+      <svg class="corner bl" viewBox="0 0 200 200" aria-hidden="true"></svg>
+      <svg class="corner br" viewBox="0 0 200 200" aria-hidden="true"></svg>
+
+      <h1>Kawaii Corner ✨</h1>
+      <p class="subtitle">Pink sparkles, cutest vibes… and one very important question 💍</p>
+
+      <div class="pillRow">
+        <div class="pill"><span class="dot" style="background:var(--pink2)"></span> sweet</div>
+        <div class="pill"><span class="dot" style="background:var(--lav)"></span> dreamy</div>
+        <div class="pill"><span class="dot" style="background:var(--mint)"></span> forever</div>
+      </div>
+
+      <div class="grid">
+        <section class="panel cta">
+          <div style="font-weight:900; font-size:clamp(16px,4.2vw,18px);">
+            Psst… one tiny question awaits 🫧
+          </div>
+          <div style="opacity:.9; max-width:52ch; font-weight:800;">
+            Press the button when you’re ready. It’s cute, it’s a little dramatic…
+            and it might be the start of forever 💗
+          </div>
+
+          <a class="btn" href="./riddle.html" aria-label="Go to the final riddle">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 21s-7-4.6-9.5-9C.6 8 .9 5 3.2 3.5 5.4 2 8 3 9.4 5c.7 1 1.3 2 2.6 2s1.9-1 2.6-2C18 3 20.6 2 22.8 3.5 25.1 5 25.4 8 23.5 12c-2.5 4.4-9.5 9-9.5 9Z"
+                    stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            </svg>
+            One Final Riddle
+          </a>
+        </section>
+
+        <section class="panel stickers" aria-label="Cute stickers">
+          <div class="stickerStage">
+            <div class="bubble" style="left:10px; top:14px; width:170px; height:120px; animation-delay:.2s;"></div>
+            <div class="bubble" style="right:6px; top:10px; width:160px; height:110px; animation-delay:.8s;"></div>
+            <div class="bubble" style="left:54px; bottom:12px; width:220px; height:120px; animation-delay:1.3s;"></div>
+
+            <div class="kitty" aria-hidden="true">
+              <div class="ear left"></div>
+              <div class="ear right"></div>
+              <div class="face"></div>
+              <div class="bow"><div class="knot"></div></div>
+              <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+              <div class="nose"></div>
+              <div class="whisker l1"></div><div class="whisker l2"></div>
+              <div class="whisker r1"></div><div class="whisker r2"></div>
+            </div>
+
+            <div class="bunny" aria-hidden="true">
+              <div class="ear left"></div><div class="ear right"></div>
+              <div class="hood"></div><div class="face"></div>
+              <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+              <div class="blush left"></div><div class="blush right"></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Create the other 3 corner flowers by cloning the TL SVG (no gradients => safe)
+    const tl = document.querySelector(".corner.tl");
+    ["tr","bl","br"].forEach(cls => {
+      const c = tl.cloneNode(true);
+      c.classList.remove("tl");
+      c.classList.add(cls);
+      tl.parentElement.appendChild(c);
+    });
+
+    // Floating sparkles
+    const COUNT = 24;
+    function makeSparkle(){
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      const left = Math.random() * 100;
+      const size = 6 + Math.random() * 11;
+      const dur  = 6 + Math.random() * 10;
+      const delay= Math.random() * 7;
+
+      s.style.left = left + "vw";
+      s.style.bottom = (-20 - Math.random()*40) + "px";
+      s.style.width = size + "px";
+      s.style.height= size + "px";
+      s.style.animationDuration = dur + "s";
+      s.style.animationDelay = delay + "s";
+
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), (dur + delay) * 1000);
+    }
+    for(let i=0;i<COUNT;i++) makeSparkle();
+    setInterval(makeSparkle, 900);
+  </script>
+</body>
+</html>
